@@ -4,5 +4,6 @@
 *.so
 *.sassc
 *.map
+*.iml
 
-
+.idea/
