@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+    "net/http"
+    "domains/lab"
+)
 
 type Route struct {
     Name        string
@@ -41,5 +44,17 @@ var routes = Routes{
         "GET",
         "/teapot",
         Teapot,
+    },
+    Route{
+        "LabsIndex",
+        "GET",
+        "/labs",
+        lab.Index,
+    },
+    Route{
+        "LabsIndex",
+        "GET",
+        "/labs/{id:[0-9]+}",
+        lab.Show,
     },
 }
