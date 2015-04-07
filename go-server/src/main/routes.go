@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+    "net/http"
+    "settings"
+    )
 
 type Route struct {
     Name        string
@@ -41,5 +44,11 @@ var routes = Routes{
         "GET",
         "/teapot",
         Teapot,
+    },
+    Route{
+        "Page",
+        "GET",
+        "/p/{pageName}",
+        http.StripPrefix("/p/",http.FileServer(http.Dir(settings.TemplatePath))).ServeHTTP,
     },
 }
