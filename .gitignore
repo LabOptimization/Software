@@ -8,3 +8,4 @@
 
 .idea/
 bin/main
+go-server/bin

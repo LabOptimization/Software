@@ -2,7 +2,7 @@ package main
 
 import (
     "net/http"
-    "domains/lab"
+    "lab"
 )
 
 type Route struct {
@@ -52,8 +52,14 @@ var routes = Routes{
         lab.Index,
     },
     Route{
-        "LabsIndex",
+        "LabsShow",
         "GET",
+        "/labs/{id:[0-9]+}",
+        lab.Show,
+    },
+    Route{
+        "LabsCreate",
+        "Post",
         "/labs/{id:[0-9]+}",
         lab.Show,
     },
