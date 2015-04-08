@@ -1,16 +1,22 @@
-{{define "layout"}}
 <!DOCTYPE html>
-<html>
+<html ng-app="phonecatApp">
 <head>
     <title>
-        {{template "title"}}
+        Smaht Scope
     </title>
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
-</head>
-<body>
-    {{template "body"}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="/static/js/main.js"></script>
+</head>
+
+<body ng-controller="PhoneListCtrl">
+    <h1> Hello Go </h1>
+  <ul>
+      <li ng-repeat="phone in phones">
+            <span>{{phone.name}}</span>
+                  <p>{{phone.snippet}}</p>
+                      </li>
+                        </ul>
+
 </body>
 </html>
-{{end}}

@@ -3,6 +3,7 @@ package main
 import (
     "net/http"
     "lab"
+    "settings"
 )
 
 type Route struct {
@@ -62,5 +63,11 @@ var routes = Routes{
         "Post",
         "/labs/{id:[0-9]+}",
         lab.Show,
+    },
+    Route{
+        "Page",
+        "GET",
+        "/p/{pageName}",
+        http.StripPrefix("/p/",http.FileServer(http.Dir(settings.TemplatePath))).ServeHTTP,
     },
 }
