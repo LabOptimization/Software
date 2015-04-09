@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="voltApp">
+<head>
+    <title>
+        Smaht Scope
+    </title>
+    <link rel="stylesheet" type="text/css" href="/s/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="/s/js/main.js"></script>
+</head>
+
+<body ng-controller="PeopleListCtrl">
+    <h1> Hello Go </h1>
+  <ul>
+      <li ng-repeat="p in jobs">
+            <span>{{p.name}}</span>
+            <p>{{p.job}}</p>
+      </li>
+  </ul>
+
+</body>
+</html>
