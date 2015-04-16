@@ -12,6 +12,7 @@ var allLabs Labs = Labs{
                         ID:1,
                         Name:"DC Circuit",
                         TitleImage:"/s/images/dc_circuit.gif",
+                        PartnersAllowed: true,
                         Values:Measurements{
                             Measurement{ID:1,
                             Frequency:3.0,
@@ -22,6 +23,7 @@ var allLabs Labs = Labs{
                     {   ID:2,
                         Name:"Tesla Coil",
                         TitleImage:"/s/images/tesla_coil.jpg",
+                        PartnersAllowed: false,
                         Values:Measurements{
                             Measurement{ID:1,
                             Frequency:13.0,

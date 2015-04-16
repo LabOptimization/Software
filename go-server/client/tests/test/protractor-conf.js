@@ -2,7 +2,7 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    '../tests.test.js'
+    '../e2e/*.js'
   ],
 
   capabilities: {

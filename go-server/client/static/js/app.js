@@ -1,6 +1,7 @@
 var voltApp = angular.module('voltApp', [
   'ngRoute',
-  'voltControllers'
+  'voltControllers',
+  'voltFilters'
 ]);
 
 voltApp.config(['$routeProvider',
