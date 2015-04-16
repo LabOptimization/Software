@@ -18,5 +18,11 @@ All things software related
     sudo npm install
     
     npm run update-webdriver
-    
+   
+#### End to end tests
+
     npm run protractor
+
+#### Unit tests
+
+    npm run test

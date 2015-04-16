@@ -78,6 +78,18 @@ describe('Volt App', function() {
 
 
         });
+
+        it('should display the first phone image as the main phone image', function() {
+              expect(element(by.css('img#lab')).getAttribute('src')).toMatch(/s\/images\/dc_circuit.gif/);
+        });
+
+        it('should swap main image if a thumbnail image is clicked on', function() {
+          var oldsrc = element(by.css('img#lab')).getAttribute('src');
+          var newsrc = element(by.css('.phone-thumbs li:nth-child(3) img')).getAttribute('src');
+          element(by.css('.phone-thumbs li:nth-child(3) img')).click();
+          expect(element(by.css('img.phone')).getAttribute('src')).toMatch(/img\/phones\/nexus-s.2.jpg/);
+        });
+
     });
 });
 

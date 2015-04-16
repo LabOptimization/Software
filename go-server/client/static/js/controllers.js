@@ -9,7 +9,12 @@ voltApp.controller('LabListCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $http.get('/labs').success(function(data) {
       $scope.labs = data;
+      $scope.mainImageUrl = data[0].TitleImage;
     });
+
+    $scope.setImage = function(url){
+        $scope.mainImageUrl = url;
+    };
 }]);
 
 voltControllers.controller('LabDetailCtrl', ['$scope', '$routeParams', '$http',

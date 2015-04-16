@@ -16,11 +16,13 @@
         <option value="-name">-Name</option>
     </select>
 </p>
+<img ng-src="{{mainImageUrl}}" id="lab" width="500px">
+
 <li ng-repeat="l in labs | filter:query | orderBy:orderProp">
     <div>
         <a href="#/labs/{{l.ID}}">Name: {{l.Name}}</a>
     </div>
-    <img src="{{l.TitleImage}}">
+    <img src="{{l.TitleImage}}" width="150px" ng-click="setImage(l.TitleImage)">
 </li>
 
 <pre>{{labs | filter:query | orderBy:orderProp | json}}</pre>
