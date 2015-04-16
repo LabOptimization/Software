@@ -16,6 +16,11 @@ type Route struct {
 
 type Routes []Route
 
+var fileserver http.HandlerFunc = http.HandlerFunc(func (res http.ResponseWriter, req *http.Request){
+	fmt.Println("requesting ",req.URL)
+	http.StripPrefix("/s/", http.FileServer(http.Dir(settings.StaticPath))).ServeHTTP(res,req)
+})
+
 var routes = Routes{
 	Route{
 		"Index",
@@ -69,10 +74,13 @@ var routes = Routes{
 		"Page",
 		"GET",
 		"/s/{fileType}/{file}",
-		http.HandlerFunc(func (res http.ResponseWriter, req *http.Request){
-			fmt.Println("requesting ",req.URL)
-			http.StripPrefix("/s/", http.FileServer(http.Dir(settings.StaticPath))).ServeHTTP(res,req)
-		}),
+		fileserver,
+	},
+	Route{
+		"Page",
+		"GET",
+		"/s/{fileType}/{filePurpose}/{file}",
+		fileserver,
 	},
 }
 

@@ -10,3 +10,5 @@
 bin/main
 go-server/bin
 github.com/
+node_modules/
+bower_components/

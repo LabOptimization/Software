@@ -15,7 +15,6 @@ import (
 
 func Index(w http.ResponseWriter, r *http.Request) {
     indexHtml, err := ioutil.ReadFile(settings.StaticPath + "html/index.html")
-    fmt.Println(indexHtml)
     if err != nil {
         panic(err)
     }

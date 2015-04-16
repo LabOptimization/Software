@@ -14,7 +14,12 @@ type Lab struct {
     ID              int64
     Name            string
     Values          Measurements
+    TitleImage string
+    Images []string
 }
+
+
+
 
 type Labs []Lab
 
