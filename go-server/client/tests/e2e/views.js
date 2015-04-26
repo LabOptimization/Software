@@ -79,7 +79,7 @@ describe('Volt App', function() {
 
         });
 
-        it('should display the first phone image as the main phone image', function() {
+        it('should display the fi✘rst phone image as the main phone image', function() {
               expect(element(by.css('img#lab')).getAttribute('src')).toMatch(/s\/images\/dc_circuit.gif/);
         });
 

@@ -13,12 +13,20 @@ import (
 )
 
 
-func Index(w http.ResponseWriter, r *http.Request) {
-    indexHtml, err := ioutil.ReadFile(settings.StaticPath + "html/index.html")
+func returnPartial(w http.ResponseWriter, partial string){
+    indexHtml, err := ioutil.ReadFile(settings.StaticPath + "html/" + partial)
     if err != nil {
         panic(err)
     }
     fmt.Fprintln(w, string(indexHtml))
+}
+
+func Index(w http.ResponseWriter, r *http.Request) {
+    returnPartial(w,"index.html")
+}
+
+func Home(w http.ResponseWriter, r *http.Request) {
+    returnPartial(w,"home.html")
 }
 
 func Teapot(w http.ResponseWriter, r *http.Request) {

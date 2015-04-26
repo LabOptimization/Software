@@ -4,7 +4,6 @@ import (
 	"lab"
 	"net/http"
 	"settings"
-	"fmt"
 )
 
 type Route struct {
@@ -17,7 +16,6 @@ type Route struct {
 type Routes []Route
 
 var fileserver http.HandlerFunc = http.HandlerFunc(func (res http.ResponseWriter, req *http.Request){
-	fmt.Println("requesting ",req.URL)
 	http.StripPrefix("/s/", http.FileServer(http.Dir(settings.StaticPath))).ServeHTTP(res,req)
 })
 
@@ -52,11 +50,12 @@ var routes = Routes{
 		"/teapot",
 		Teapot,
 	},
+
 	Route{
-		"LabsIndex",
+		"Home",
 		"GET",
-		"/labs",
-		lab.Index,
+		"/home",
+		Home,
 	},
 	Route{
 		"LabsShow",

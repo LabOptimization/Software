@@ -1,0 +1,16 @@
+<h3>Create a Lab</h3>
+
+<form name="createLab" ng-model-options="{ getterSetter: true }" ng-controller="LabCreateCntrl">
+    <input ng-model="name" name="name" />
+    <div>
+        <h4>Step 1</h4>
+        <p>Enter a description:</p>
+        <textarea name="description"></textarea>
+        <div>
+            Enter an expected value: <input name="value"/>
+        </div>
+    </div>
+
+
+    <pre>name = <span ng-bind="name()"></span></pre>
+</form>

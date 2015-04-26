@@ -1,7 +1,19 @@
 
 
 var voltControllers = angular.module('voltControllers', []);
-var i = 0;
+
+
+voltApp.controller('HomeCtrl', ['$scope', '$http', function ($scope, $http) {
+
+    /*
+    $http.get('/labs').success(function(data) {
+      $scope.labs = data;
+      $scope.mainImageUrl = data[0].TitleImage;
+    });
+    */
+
+
+}]);
 voltApp.controller('LabListCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $scope.name = "Go";
@@ -17,13 +29,14 @@ voltApp.controller('LabListCtrl', ['$scope', '$http', function ($scope, $http) {
     };
 }]);
 
-voltControllers.controller('LabDetailCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
-    $scope.labId = $routeParams.labId;
-
-    $http.get('/labs/' + $scope.labId).success(function(data) {
-      $scope.lab = data;
-    });
+voltControllers.controller('LabCreateCntrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http){
+    var _name = '';
+    $scope.name = function(newName) {
+        if (angular.isDefined(newName)) {
+            _name = newName;
+        }
+        return _name;
+    };
 
 }]);
 
