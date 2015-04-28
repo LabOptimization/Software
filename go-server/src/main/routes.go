@@ -64,12 +64,6 @@ var routes = Routes{
 		lab.Show,
 	},
 	Route{
-		"LabsCreate",
-		"Post",
-		"/labs/{id:[0-9]+}",
-		lab.Show,
-	},
-	Route{
 		"Page",
 		"GET",
 		"/s/{fileType}/{file}",

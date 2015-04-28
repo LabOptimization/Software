@@ -1,8 +1,10 @@
 var voltApp = angular.module('voltApp', [
   'ngRoute',
   'voltControllers',
-  'voltFilters'
-]);
+  'voltFilters',
+  'voltServices'
+
+ ]);
 
 voltApp.config(['$routeProvider',
   function($routeProvider) {
@@ -12,8 +14,8 @@ voltApp.config(['$routeProvider',
         controller: 'HomeCtrl'
       }).
       when('/create', {
-        templateUrl: '/s/html/partials/create-lab.html',
-        controller: 'LabCreateCntrl'
+        templateUrl: '/s/html/partials/create-lab.html'//,
+        //controller: 'LabCreateCntrl'
       }).
       otherwise({
         redirectTo: '/home'
