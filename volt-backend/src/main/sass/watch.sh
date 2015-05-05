@@ -1,2 +1,2 @@
 #!/bin/bash
-sass --watch .:../static/css
+sass --watch .:../resources/static/css
