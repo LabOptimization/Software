@@ -9,10 +9,24 @@ import (
 
     "github.com/gorilla/mux"
     "strconv"
+    "settings"
 )
 
+
+func returnPartial(w http.ResponseWriter, partial string){
+    indexHtml, err := ioutil.ReadFile(settings.StaticPath + "html/" + partial)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Fprintln(w, string(indexHtml))
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "Welcome!")
+    returnPartial(w,"index.html")
+}
+
+func Home(w http.ResponseWriter, r *http.Request) {
+    returnPartial(w,"home.html")
 }
 
 func Teapot(w http.ResponseWriter, r *http.Request) {
