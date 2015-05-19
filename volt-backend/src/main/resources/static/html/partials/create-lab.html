@@ -4,7 +4,10 @@
     <input ng-model="form.name" name="name" placeholder="Lab Name"/>
     <div id="stepArea">
         <div id="step0">
-            <h4>1 <input placeholder="Step name"/></h4>
+            <h4>
+                <span class="step-number">1</span>
+                <input class="step-name" placeholder="Step name" ng-model="form.steps[0].name"/>
+            </h4>
             <div class="insertArea"></div>
             <div ng-show="showButtons">
                 <select class="select-element" ng-model="form.steps[0].currentSelect">
@@ -16,5 +19,5 @@
             </div>
         </div>
     </div>
-    <button ng-click="addStep">Add step</button>
+    <button ng-click="addStep()" >Add step</button>
 </form>

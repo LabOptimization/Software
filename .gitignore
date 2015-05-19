@@ -10,7 +10,7 @@
 bin/main
 go-server/bin
 github.com/
-
+_golang-learn/
 
 .gradle
 build/
