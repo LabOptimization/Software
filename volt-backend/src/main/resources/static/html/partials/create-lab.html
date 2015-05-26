@@ -1,23 +1,30 @@
 <h3>Create a Lab</h3>
 
-<form name="createLab" ng-model-options="{ getterSetter: true }" ng-controller="LabCreateCntrl">
+<form name="createLab" ng-controller="LabCreateCntrl" class="">
     <input ng-model="form.name" name="name" placeholder="Lab Name"/>
-    <div id="stepArea">
-        <div id="step0">
-            <h4>
-                <span class="step-number">1</span>
-                <input class="step-name" placeholder="Step name" ng-model="form.steps[0].name"/>
-            </h4>
-            <div class="insertArea"></div>
-            <div ng-show="showButtons">
-                <select class="select-element" ng-model="form.steps[0].currentSelect">
-                    <option value="{{stepElements[0]}}">Value Question</option>
-                    <option value="{{stepElements[1]}}">Graph Question</option>
-                    <option value="{{stepElements[2]}}">Description</option>
-                </select>
-                <button class="add-step-element" ng-click="addElementToStep($event)">Add</button>
+    <div class="indent-left">
+        <div id="stepArea" >
+            <div id="step0">
+                <h4>
+                    <span class="step-number">1</span>
+                    <span class="delete-step clickable" ng-click="removeStep($event)">Delete</span>
+                </h4>
+                <div class="lab-builder indent-left">
+                    <input class="step-name" placeholder="Step name" ng-model="form.steps[0].name"/>
+
+                    <div class="insertArea stepElement"></div>
+                    <div ng-show="showButtons">
+                        <select class="select-element" ng-model="form.steps[0].currentSelect">
+                            <option value="{{stepElements[0]}}">Value Question</option>
+                            <option value="{{stepElements[1]}}">Graph Question</option>
+                            <option value="{{stepElements[2]}}">Description</option>
+                        </select>
+                        <button class="add-step-element" ng-click="addElementToStep($event)">Add</button>
+                    </div>
+                </div>
             </div>
         </div>
+        <button ng-click="addStep()" >Add step</button>
     </div>
-    <button ng-click="addStep()" >Add step</button>
+    <button type="submit" class="indent-top">Submit</button>
 </form>

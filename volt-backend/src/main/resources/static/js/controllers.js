@@ -107,7 +107,7 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
         var templ = setElementModel($scope.templates[sel], 'form.steps['+id+'].elements['+indx+']');
         linkFn =  $compile(templ);
         var html = linkFn($scope);
-        angular.element(step.children[1]).append(html);
+        $(step).find('.insertArea').append(html);
         test = $scope.form;
 
     };

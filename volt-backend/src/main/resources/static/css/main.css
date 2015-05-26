@@ -1,6 +1,29 @@
+.indent-left {
+  padding-left: 2em; }
+
+.indent-bottom {
+  margin-bottom: 2em; }
+
+.indent-top {
+  margin-top: 2em; }
+
+.fright {
+  float: right; }
+
+.clickable {
+  cursor: pointer; }
+
+.step-name {
+  margin-bottom: 1em; }
+
+.delete-step {
+  font-size: 0.6em; }
+
 body {
-  font: 100% Helvetica, sans-serif;
-  background-color: #888;
-  color: white; }
+  font-family: Helvetica, sans-serif;
+  padding: 10px; }
+
+.stepElement {
+  padding-left: 1em; }
 
 /*# sourceMappingURL=main.css.map */
