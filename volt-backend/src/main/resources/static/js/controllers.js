@@ -27,14 +27,14 @@ function setElementModel(string, model){
     return string.replace(/##/g,model);
 }
 
-function setStepModel(element, id){
-    element.find('.step-number').text((id+1)+'');
+function setStepModel(element, id, stepNumber){
+    element.find('.step-number').text((stepNumber)+'');
     return element.html(element.html().replace(/steps\[0\]/g, 'steps['+id+']'));
 }
 
 function StepElement(type,parent){
     return {
-        type: type, value:null, step: parent, plusTolerance:0, negTolerance:0
+        type: type, value:null, step: parent, plusTolerance:0, negTolerance:0, label:''
     };
 }
 
@@ -44,7 +44,22 @@ function Step(id, sel){
     };
 }
 
+function getStep(element)
+{
+        var step = element.target.parentElement;
+        while(step.id.indexOf('step') == -1)
+        {
+            step = step.parentElement;
+        }
 
+        return step;
+
+}
+
+function getStepId(step)
+{
+    return parseInt(step.id.replace('step',''));
+}
 voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htmlPartial',function($scope, $http,$compile, htmlPartial){
 
     var _name = '';
@@ -57,6 +72,8 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
 
     $scope.form = {
         name: '',
+        description:'',
+        numSteps: 1,
         steps: [
             { id: 0, name:'', elements:[], currentSelect: defaultSelect }
         ]
@@ -84,12 +101,7 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
 
     $scope.addElementToStep = function(res){
 
-        var step = res.target.parentElement;
-        while(step.id.indexOf('step') == -1)
-        {
-            step = step.parentElement;
-        }
-
+        var step = getStep(res);
         var id = parseInt(step.id.replace('step',''));
 
         // get the value from dropdown
@@ -129,15 +141,56 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
         newStep.attr('id', newStep.id);
 
         $scope.form.steps.push( new Step(id, defaultSelect) );
-
-        setStepModel(newStep, id);
+        $scope.form.numSteps++;
+        setStepModel(newStep, id, $scope.form.numSteps);
         var linkFn = $compile(newStep);
         var html = linkFn($scope);
+        console.log('appending');
         angular.element(document.getElementById('stepArea'))
                 .append(html);
 
     };
 
+    $scope.removeStep = function(event){
+        var step = getStep(event);
 
+        var id = parseInt(step.id.replace('step',''));
+
+        if ($scope.form.steps[id-1] === null){
+            return;
+        }
+        // set a tombstone
+        $scope.form.steps[id-1] = null;
+        $scope.form.numSteps--;
+        $('.step').each(function(){
+            var oldId = getStepId(this);
+            if (oldId > id){
+                var oldStep = $(this);
+               oldStep.find('.step-number').html(parseInt(oldStep.find('.step-number').html())-1);
+               //oldStep.attr('id', 'step'+(oldId));
+            }
+        });
+        step.remove();
+
+    };
+
+    $scope.submit = function(){
+        console.log('submit!');
+        $http.post('/labs', {name:'mylab',description:'my description',
+            steps:['a','b','c']
+            //steps:[{label:'my label', type:'fox', value:1.0, posTolerance:0.1, negTolerance:0.1}]
+            //steps:{{label:'my label', type:'fox', value:1.0, posTolerance:0.1, negTolerance:0.1}}
+
+            }).
+        //$http.post('/labs', $scope.form).
+          success(function(data, status, headers, config) {
+            console.log('success',data);
+          }).
+          error(function(data, status, headers, config) {
+            console.log('fail');
+            console.log(data,status);
+            console.log(headers,config);
+          });
+    }
 
 }]);

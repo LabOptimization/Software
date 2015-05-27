@@ -1,10 +1,13 @@
 <h3>Create a Lab</h3>
 
-<form name="createLab" ng-controller="LabCreateCntrl" class="">
+<form name="createLab" ng-controller="LabCreateCntrl" class="" ng-submit="submit()">
     <input ng-model="form.name" name="name" placeholder="Lab Name"/>
-    <div class="indent-left">
+    <div>
+        <textarea ng-model="form.description" name="description" placeholder="Lab Description"></textarea>
+    </div>
+        <div class="indent-left">
         <div id="stepArea" >
-            <div id="step0">
+            <div id="step0" class="step">
                 <h4>
                     <span class="step-number">1</span>
                     <span class="delete-step clickable" ng-click="removeStep($event)">Delete</span>
@@ -24,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <button ng-click="addStep()" >Add step</button>
+        <button type="button" ng-click="addStep()" >Add step</button>
     </div>
     <button type="submit" class="indent-top">Submit</button>
 </form>

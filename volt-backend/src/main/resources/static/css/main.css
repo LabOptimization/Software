@@ -13,6 +13,9 @@
 .clickable {
   cursor: pointer; }
 
+.wide-input {
+  width: 25em; }
+
 .step-name {
   margin-bottom: 1em; }
 

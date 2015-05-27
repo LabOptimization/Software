@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.validation.constraints.NotNull
+import javax.persistence.OneToMany
+import javax.persistence.OrderColumn
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 class Lab {
@@ -16,4 +19,8 @@ class Lab {
     String name
 
     String description
+
+    @OrderColumn(name="id")
+    @OneToMany(mappedBy = "lab")
+    private List <Measurement> steps
 }
