@@ -1,20 +1,11 @@
 var voltControllers = angular.module('voltControllers', []);
 
 
-voltApp.controller('HomeCtrl', ['$scope', '$http', function ($scope, $http) {
+voltControllers.controller('HomeCtrl', ['$scope', '$http', function ($scope, $http) {
 
 }]);
 
 test = '';
-
-
-function addDescription($scope, $compile, stepId){
-    var div = document.getElementById('step'+stepId);
-    var linkFn = $compile('<textarea ng-model-options="{ getterSetter: true }"  name="description" ng-model="description"></textarea>');
-    var html = linkFn($scope);
-    test = html;
-    angular.element(div).append(html);
-}
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -60,7 +51,38 @@ function getStepId(step)
 {
     return parseInt(step.id.replace('step',''));
 }
+
+function serializeForm(form)
+{
+    for(i in form.steps)
+    {
+        // remove tombstones
+        if (form.steps[i] == null)
+        {
+            form.steps.splice(i,1);
+        }
+        else
+        {
+            for (j in form.steps[i].elements)
+            {
+                if (form.steps[i].elements[j] == null)
+                {
+                    form.steps[i].elements.splice(j,1);
+                }
+                else
+                {
+                    // remove circular reference
+                    form.steps[i].elements[j].step = null;
+                }
+            }
+        }
+    }
+}
+
 voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htmlPartial',function($scope, $http,$compile, htmlPartial){
+
+    $scope.showLoading = false;
+    $scope.showForm = true;
 
     var _name = '';
     var _des = '';
@@ -174,23 +196,44 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
 
     };
 
-    $scope.submit = function(){
+    $scope.submit = function(valid){
+        if (!valid) return;
         console.log('submit!');
-        $http.post('/labs', {name:'mylab',description:'my description',
-            steps:['a','b','c']
-            //steps:[{label:'my label', type:'fox', value:1.0, posTolerance:0.1, negTolerance:0.1}]
-            //steps:{{label:'my label', type:'fox', value:1.0, posTolerance:0.1, negTolerance:0.1}}
-
-            }).
-        //$http.post('/labs', $scope.form).
+        $scope.showLoading = true;
+        $scope.showForm = false;
+        serializeForm($scope.form);
+        $scope.form.steps = JSON.stringify($scope.form.steps);
+        $http.post('/labs', $scope.form).
           success(function(data, status, headers, config) {
-            console.log('success',data);
+            console.log('_success',data);
+            console.log(data._links.self.href);
+            $scope.submissionLink = data._links.self.href;
+            console.log('steps: ', $scope.form.steps);
+            $scope.showLoading = false;
           }).
           error(function(data, status, headers, config) {
             console.log('fail');
             console.log(data,status);
             console.log(headers,config);
+            $scope.showLoading = false;
+            $scope.showForm = true;
           });
     }
+
+}]);
+
+voltControllers.controller('LabViewCntrl', ['$scope', '$http', function ($scope, $http) {
+    console.log('LabViewCntrl');
+
+    $http.get('/labs').
+      success(function(data, status, headers, config) {
+        console.log('Labs',data);
+        if (data._embedded){
+            $scope.labs = data._embedded.labs;
+        }
+      }).
+      error(function(data, status, headers, config) {
+        console.log('Error retrieving labs!',arguments);
+      });
 
 }]);

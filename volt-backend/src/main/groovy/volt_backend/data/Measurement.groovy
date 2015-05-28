@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 @Entity
 class Measurement {
 
-    private int index
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id

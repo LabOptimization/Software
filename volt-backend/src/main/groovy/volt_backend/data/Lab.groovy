@@ -20,7 +20,13 @@ class Lab {
 
     String description
 
+    // store all steps as json
+    String steps
+    
+    // or store them all as separate entries
     @OrderColumn(name="id")
     @OneToMany(mappedBy = "lab")
-    private List <Measurement> steps
+    private Set <Measurement>  measurements = new HashSet<>();
+
+
 }
