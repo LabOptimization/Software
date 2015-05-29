@@ -1,10 +1,11 @@
 <h3>Create a Lab</h3>
 <div>
 <form name="createLab"  class="" ng-submit="submit(createLab.$valid)" ng-show="showForm">
-    <div  ng-class="{ 'has-error' : createLab.labName.$invalid && !createLab.labName.$pristine }">
-        <input ng-model="form.name" name="labName" placeholder="Lab Name" ng-required="true" class="form-control"/>
+    <div ng-init="setForm(createLab);"></div>
+    <div show-errors>
+        <input ng-model="form.name" name="labName" placeholder="Lab Name" required class="form-control" />
     </div>
-    <div class="indent-top" ng-class="{ 'has-error' : createLab.labDescription.$invalid && !createLab.labDescription.$pristine }">
+    <div class="indent-top" show-errors>
         <textarea ng-model="form.description" name="labDescription" placeholder="Lab Description" class="form-control" required></textarea>
     </div>
         <div class="indent-left">
@@ -14,8 +15,8 @@
                     <span class="step-number">1</span>
                     <span class="delete-step clickable" ng-click="removeStep($event)">Delete</span>
                 </h4>
-                <div class="lab-builder indent-left">
-                    <input class="step-name" placeholder="Step name" ng-model="form.steps[0].name" class="form-control"/>
+                <div class="lab-builder indent-left" show-errors>
+                    <input name="step-name0" class="step-name form-control" placeholder="Step name" ng-model="form.steps[0].name" class="form-control" required/>
 
                     <div class="insertArea stepElement"></div>
                     <div ng-show="showButtons">

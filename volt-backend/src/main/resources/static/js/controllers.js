@@ -20,6 +20,7 @@ function setElementModel(string, model){
 
 function setStepModel(element, id, stepNumber){
     element.find('.step-number').text((stepNumber)+'');
+    element.find('.step-name').attr('name', 'step-name'+id);
     return element.html(element.html().replace(/steps\[0\]/g, 'steps['+id+']'));
 }
 
@@ -42,9 +43,7 @@ function getStep(element)
         {
             step = step.parentElement;
         }
-
         return step;
-
 }
 
 function getStepId(step)
@@ -52,11 +51,12 @@ function getStepId(step)
     return parseInt(step.id.replace('step',''));
 }
 
+
+// Remove tombstones and circular references
 function serializeForm(form)
 {
     for(i in form.steps)
     {
-        // remove tombstones
         if (form.steps[i] == null)
         {
             form.steps.splice(i,1);
@@ -71,7 +71,6 @@ function serializeForm(form)
                 }
                 else
                 {
-                    // remove circular reference
                     form.steps[i].elements[j].step = null;
                 }
             }
@@ -167,9 +166,12 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
         setStepModel(newStep, id, $scope.form.numSteps);
         var linkFn = $compile(newStep);
         var html = linkFn($scope);
-        console.log('appending');
-        angular.element(document.getElementById('stepArea'))
-                .append(html);
+
+        $('#stepArea').append(html);
+
+        // refresh the form
+        $compile(newStep)($scope);
+        console.log('added');
 
     };
 
@@ -189,7 +191,6 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
             if (oldId > id){
                 var oldStep = $(this);
                oldStep.find('.step-number').html(parseInt(oldStep.find('.step-number').html())-1);
-               //oldStep.attr('id', 'step'+(oldId));
             }
         });
         step.remove();
@@ -220,13 +221,14 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
           });
     }
 
+    $scope.setForm = function(form){ $scope.formCtrl = form; console.log('form,',form); };
 }]);
 
 voltControllers.controller('LabViewCntrl', ['$scope', '$http', function ($scope, $http) {
     console.log('LabViewCntrl');
 
     $http.get('/labs').
-      success(function(data, status, headers, config) {
+      success(function(data, status, headers, config){
         console.log('Labs',data);
         if (data._embedded){
             $scope.labs = data._embedded.labs;
