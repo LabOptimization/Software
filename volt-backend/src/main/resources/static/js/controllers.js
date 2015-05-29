@@ -26,7 +26,7 @@ function setStepModel(element, id, stepNumber){
 
 function StepElement(type,parent){
     return {
-        type: type, value:null, step: parent, plusTolerance:0, negTolerance:0, label:''
+        type: type, value:null, step: parent, plusTolerance:null, negTolerance:null, label:''
     };
 }
 
@@ -78,7 +78,8 @@ function serializeForm(form)
     }
 }
 
-voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htmlPartial',function($scope, $http,$compile, htmlPartial){
+voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htmlPartial','$timeout',
+                                    function($scope, $http,$compile, htmlPartial,$timeout){
 
     $scope.showLoading = false;
     $scope.showForm = true;
@@ -141,7 +142,11 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
         linkFn =  $compile(templ);
         var html = linkFn($scope);
         $(step).find('.insertArea').append(html);
-        test = $scope.form;
+
+        // Refresh after dom is updated
+        $timeout(function(){
+            $compile(html)($scope);
+         },0);
 
     };
 
@@ -171,7 +176,6 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
 
         // refresh the form
         $compile(newStep)($scope);
-        console.log('added');
 
     };
 
@@ -199,7 +203,6 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
 
     $scope.submit = function(valid){
         if (!valid) return;
-        console.log('submit!');
         $scope.showLoading = true;
         $scope.showForm = false;
         serializeForm($scope.form);
@@ -221,7 +224,7 @@ voltControllers.controller('LabCreateCntrl', ['$scope', '$http', '$compile','htm
           });
     }
 
-    $scope.setForm = function(form){ $scope.formCtrl = form; console.log('form,',form); };
+    $scope.setForm = function(form){ $scope.formCtrl = form; };
 }]);
 
 voltControllers.controller('LabViewCntrl', ['$scope', '$http', function ($scope, $http) {

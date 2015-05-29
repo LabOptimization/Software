@@ -1,7 +1,19 @@
 <div class="graphQuestion">
-    <div><input placeholder="Label for graph question" class="element-label wide-input" ng-model="##.label"/></div>
-    Enter an expected graph: <input name="value" ng-model="##.value"/>
-    +Tolerance: 0.<input name="value" ng-model="##.plusTolerance"/>
-    -Tolerance: 0.<input name="value" ng-model="##.negTolerance"/>
+    <div><input placeholder="Label for graph question" class="element-label wide-input form-control" ng-model="##.label"/></div>
+    GRAPH HERE
+    <div dynamic-errors>
+        <input name="posvalue{{##.step.id + ##.step.elements.length}}" ng-model="##.plusTolerance" class="form-control" placeholder="Positive Tolerance %"
+               type="number"
+               min="0.0"
+               max="100.0"
+               required/>
+    </div>
+    <div dynamic-errors>
+        <input name="negvalue{{##.step.id + ##.step.elements.length}}" ng-model="##.negTolerance" class="form-control" placeholder="Negative Tolerance %"
+               type="number"
+               min="0.0"
+               max="100.0"
+               required/>
+    </div>
     <button ng-click="removeElement($event, ##)">Delete</button>
 </div>

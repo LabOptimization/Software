@@ -15,13 +15,14 @@
                     <span class="step-number">1</span>
                     <span class="delete-step clickable" ng-click="removeStep($event)">Delete</span>
                 </h4>
-                <div class="lab-builder indent-left" show-errors>
-                    <input name="step-name0" class="step-name form-control" placeholder="Step name" ng-model="form.steps[0].name" class="form-control" required/>
-
+                <div class="lab-builder indent-left" >
+                    <div show-errors>
+                        <input name="step-name0" class="step-name form-control" placeholder="Step name" ng-model="form.steps[0].name" class="form-control" required/>
+                    </div>
                     <div class="insertArea stepElement"></div>
                     <div ng-show="showButtons">
                         <select class="select-element" ng-model="form.steps[0].currentSelect" class="form-control">
-                            <option value="{{stepElements[0]}}">Value Question</option>
+                            <option value="{{stepElements[0]}}" selected="selected">Value Question</option>
                             <option value="{{stepElements[1]}}">Graph Question</option>
                             <option value="{{stepElements[2]}}">Description</option>
                         </select>
