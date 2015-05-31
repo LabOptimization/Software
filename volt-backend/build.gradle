@@ -48,9 +48,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-logging")
     compile("org.codehaus.groovy:groovy")
+
     runtime("org.hsqldb:hsqldb")
+    runtime("org.liquibase:liquibase-core")
+
     providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
-    testCompile("org.springframework.boot:spring-boot-starter-test") 
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 task wrapper(type: Wrapper) {
