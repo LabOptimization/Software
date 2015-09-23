@@ -16,6 +16,9 @@
 .wide-input {
   width: 25em; }
 
+.stepElement {
+  padding: 30px; }
+
 .step-name {
   margin-bottom: 1em; }
 

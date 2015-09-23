@@ -1,35 +1,99 @@
 <h3>Create a Lab</h3>
 <div>
-<form name="createLab"  class="" ng-submit="submit(createLab.$valid)" ng-show="showForm">
-    <div ng-init="setForm(createLab);"></div>
-    <div show-errors>
-        <input ng-model="form.name" name="labName" placeholder="Lab Name" required class="form-control" />
-    </div>
-    <div class="indent-top" show-errors>
-        <textarea ng-model="form.description" name="labDescription" placeholder="Lab Description" class="form-control" required></textarea>
-    </div>
+    <form name="createLab"  class="" ng-submit="submit(createLab.$valid)" ng-show="showForm">
+        <div ng-init="setForm(createLab);"></div>
+        <div show-errors>
+            <input ng-model="form.name" name="labName" placeholder="Lab Name" required class="form-control" />
+        </div>
+        <div class="indent-top" show-errors>
+            <textarea ng-model="form.description" name="labDescription" placeholder="Lab Description" class="form-control" required></textarea>
+        </div>
         <div class="indent-left">
-        <div id="stepArea" >
-            <div id="step0" class="step">
-                <h4>
-                    <span class="step-number">1</span>
-                    <span class="delete-step clickable" ng-click="removeStep($event)">Delete</span>
-                </h4>
-                <div class="lab-builder indent-left" >
-                    <div show-errors>
-                        <input name="step-name0" class="step-name form-control" placeholder="Step name" ng-model="form.steps[0].name" class="form-control" required/>
-                    </div>
-                    <div class="insertArea stepElement"></div>
-                    <div ng-show="showButtons">
-                        <select class="select-element" ng-model="form.steps[0].currentSelect" class="form-control">
-                            <option value="{{stepElements[0]}}" selected="selected">Value Question</option>
-                            <option value="{{stepElements[1]}}">Graph Question</option>
-                            <option value="{{stepElements[2]}}">Description</option>
-                        </select>
-                        <button type="button" class="add-step-element" ng-click="addElementToStep($event)">Add</button>
+            <div id="stepArea" >
+                <div ng-repeat="i in steps">
+                    <div id="step{{i.id}}" class="step">
+                        <h4>
+                            <span class="step-number">{{i.id+1}}</span>
+                            <span class="delete-step clickable" >Delete</span>
+                        </h4>
+                        <div class="lab-builder indent-left" >
+                            <div show-errors>
+                                <input name="step-name0" class="step-name form-control" placeholder="Step name" ng-model="form.steps[0].name" class="form-control" required/>
+                            </div>
+                            <div class="insertArea stepElement" >
+
+                                <div ng-repeat="j in i.elements">
+
+                                    <div ng-switch on="j.type">
+                                        <div ng-switch-when="value">
+
+                                            <div class="valueQuestion stepElement" id="value-question{{i.id}}{{j.id}}" step-element="j">
+                                                <div><input placeholder="Label for value question" class="element-label wide-input" name="label"/></div>
+                                                Enter an expected value: <input name="value"/>
+                                                +Tolerance: 0.<input name="posTol" />
+                                                -Tolerance: 0.<input name="negTol" />
+                                                <button>Delete</button>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div ng-switch-when="graph">
+
+                                            <div class="graphQuestion stepElement" id="graph-question{{i.id}}{{j.id}}">
+                                                <div><input placeholder="Label for graph question" class="element-label wide-input form-control" /></div>
+                                                GRAPH HERE
+                                                <div>
+                                                    <input name="posvalue0" class="form-control" placeholder="Positive Tolerance %"
+                                                    type="number"
+                                                    min="0.0"
+                                                    max="100.0"
+                                                    required/>
+                                                </div>
+                                                <div>
+                                                    <input name="negvalue0" class="form-control" placeholder="Negative Tolerance %"
+                                                    type="number"
+                                                    min="0.0"
+                                                    max="100.0"
+                                                    required/>
+                                                </div>
+                                                <button>Delete</button>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div ng-switch-when="description">
+
+                                            <div class="description stepElement" id="description-question{{i.id}}{{j.id}}">
+                                                <p>Enter a description:</p>
+                                                <textarea name="description" ></textarea>
+                                                <button >Delete</button>
+                                            </div>
+
+                                        </div>
+                                        <div ng-switch-default>
+                                            <h1>error switching {{n}}</h1>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+                            </div>
+                            <div ng-show="showButtons">
+                                <select class="select-element" ng-model="form.steps[0].currentSelect" class="form-control">
+                                    <option value="{{stepElements[0]}}" selected="selected">Value Question</option>
+                                    <option value="{{stepElements[1]}}">Graph Question</option>
+                                    <option value="{{stepElements[2]}}">Description</option>
+                                </select>
+                                <button type="button" class="add-step-element" ng-click="addElementToStep($event)">Add</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
         <button type="button" ng-click="addStep()" >Add step</button>
 

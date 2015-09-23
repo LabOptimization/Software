@@ -1,5 +1,6 @@
 var directives = angular.module('directives', []);
 
+/*
 directives.
   directive('showErrors', function() {
     return {
@@ -22,14 +23,31 @@ directives.
       }
     }
   });
-
+*/
 directives.
-  directive('dynamicErrors', function() {
+  directive('stepElement', function($compile) {
+ 
+
     return {
-      restrict: 'A',
-      //require:  '^form',
-      link: function (scope, el, attrs, formCtrl) {
-        el.attr('show-errors','');
-      }
+        restrict: 'A',        
+        compile: function(element, attrs) {
+
+            console.log(element)
+            angular.forEach(element.find('input'), function(node){ 
+                node = angular.element(node);
+                console.log(node)
+                //node.attr('ng-model', attrs.stepElement + '.' + node.attributes['name'].value );
+                node.attr('ng-model', attrs.stepElement + '.'+node.attr('name'));
+                console.log('node',node.attributes);
+            });
+            element.removeAttr("step-element");
+            return {
+               pre: function preLink(scope, iElement, iAttrs, controller) { },
+               post: function postLink(scope, iElement, iAttrs, controller) { 
+                 $compile(iElement)(scope);
+               }
+            }
+        }
     }
+  
   });
